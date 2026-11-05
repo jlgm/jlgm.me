@@ -138,6 +138,8 @@
     .hero-text h2 { font-size: 1.9rem; margin-bottom: 0.75rem; font-weight: 400; }
     .hero-text p { color: var(--clr-light); font-size: 1.1rem; line-height: 1.8; }
     .hero-text p + p { margin-top: 0.75rem; }
+    .bio-hi { display: none; }
+    .bio-hi span { color: var(--clr-main); }
 
     /* ─── PROJECTS ───────────────────────────────────── */
     .project-list { max-width: 900px; margin: 0 auto; }
@@ -176,7 +178,9 @@
       color: var(--term-main);
     }
     .term summary::-webkit-details-marker { display: none; }
-    .term summary::after { content: " ▾"; color: var(--term-dim); }
+    .term summary::after { content: " ▾ click to expand"; color: var(--term-dim); }
+    .term summary:hover::after { color: var(--term-light); }
+    .term:not([open]) summary { margin-bottom: 0; }
     .term[open] summary::after { content: " ▴"; }
     .screen {
       background: var(--term-screen);
@@ -230,10 +234,14 @@
     /* ─── RESPONSIVE ─────────────────────────────────── */
     @media (max-width: 720px) {
       .hero-inner { display: block; text-align: center; }
-      .bio-card { display: block; text-align: center; border: none; padding: 0; }
+      .bio-card { display: block; text-align: left; padding: 1.25rem; }
+      .bio-card .hero-text h2 { display: none; }
+      .bio-card .hero-text p + p { display: none; }
+      .bio-hi { display: inline; }
+      .term summary::after { content: " ▾ expand"; }
       .project-row { display: block; }
       .project-preview { margin-bottom: 1.5rem; }
-      .profile-picture { margin: 0 auto 1.5rem; width: 200px; }
+      .profile-picture { width: 100%; max-width: 320px; margin: 0 auto 1rem; }
       .term { margin-top: 1.5rem; text-align: left; padding: 0.85rem 0.9rem 1rem; }
       .screen { font-size: 0.85rem; padding: 10px 12px; }
       .screen .row { grid-template-columns: 7em 5.5em minmax(0, 1fr); column-gap: 1em; }
@@ -262,7 +270,7 @@
           <img src="me.png" alt="João Miranda" class="profile-picture" width="240" height="179">
           <div class="hero-text">
             <h2>Hi there</h2>
-            <p>I'm João — a software engineer from Brazil building scalable backend systems at Uber. Before that I did the same at Amazon, Stocktwits and Rappi.</p>
+            <p><span class="bio-hi"><span>Hi</span>, </span>I'm João — a software engineer from Brazil building scalable backend systems at Uber. Before that I did the same at Amazon, Stocktwits and Rappi.</p>
             <p>I hold a Bachelor's and a Master's in Computer Science, both from top Brazilian schools.</p>
           </div>
         </div>
@@ -281,7 +289,7 @@
 <div class="row"><span class="y">2024 – 2025</span><span><span class="long">Software Development Engineer</span><span class="short">SDE</span></span><span>Amazon</span></div>
 <div class="row"><span class="y">2021 – 2023</span><span><span class="long">Senior Software Engineer</span><span class="short">Sr SWE</span></span><span>Stocktwits</span></div>
 <div class="row"><span class="y">2020 – 2021</span><span><span class="long">Software Engineer</span><span class="short">SWE</span></span><span>Rappi</span></div>
-<div class="row"><span class="y">2018 – 2020</span><span><span class="long">Software Engineer</span><span class="short">SWE</span></span><span>AD:60 <span class="c">(via Toptal)</span></span></div>
+<div class="row"><span class="y">2018 – 2020</span><span><span class="long">Software Engineer</span><span class="short">SWE</span></span><span>AD:60</span></div>
 <div class="row"><span class="y">2017 – 2018</span><span><span class="long">Software Engineer</span><span class="short">SWE</span></span><span>Wildlife Studios</span></div>
 <div class="gap"></div>
 <div class="line"><span class="p">$</span> <span class="cmd">cat education.log</span></div>
@@ -294,6 +302,10 @@
 <div class="line"><span class="p">$</span> <span class="blink">▋</span></div>
 </div>
         </details>
+        <script>
+          // Terminal starts open on desktop, closed on mobile.
+          if (matchMedia('(max-width: 720px)').matches) document.querySelector('.term').removeAttribute('open');
+        </script>
       </div>
     </section>
 
