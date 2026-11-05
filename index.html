@@ -28,9 +28,9 @@
       --clr-bg: #0b0a1a;
       --clr-bg-header-start: #1a1038;
       --clr-bg-header-end: #05040d;
-      --clr-main: #00f0ff;   /* electric cyan */
-      --clr-light: #c9c4ff;  /* lavender */
-      --clr-accent: #ff2a9d; /* hot magenta */
+      --clr-main: #00f0ff;
+      --clr-light: #c9c4ff;
+      --clr-accent: #ff2a9d;
       --clr-dim: rgba(201, 196, 255, 0.45);
 
       /* Terminal keeps the original neon-green look */
@@ -75,6 +75,36 @@
     }
     header p { color: var(--clr-light); font-size: 1.15rem; margin-top: 0.25rem; }
 
+    /* ─── TABS ───────────────────────────────────────── */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      background: #060510;
+      border-top: 1px dashed var(--clr-main);
+      border-bottom: 1px dashed var(--clr-main);
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      font-family: var(--mono);
+      font-size: 1rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: var(--clr-main);
+      padding: 0.75rem 2rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .tab-btn:hover { color: var(--clr-accent); }
+    .tab-btn.active {
+      color: var(--clr-accent);
+      background: rgba(255, 42, 157, 0.05);
+      box-shadow: 0 1px 4px rgba(255, 42, 157, 0.3);
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
     /* ─── HERO ───────────────────────────────────────── */
     main { flex: 1; }
     .hero { padding: 3rem 1rem 2.5rem; }
@@ -85,6 +115,17 @@
       max-width: 900px;
       margin: 0 auto;
       align-items: center;
+    }
+    .bio-card {
+      grid-column: 1 / 3;
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 2rem;
+      align-items: center;
+      border: 1px solid var(--clr-main);
+      border-radius: 4px;
+      padding: 2rem;
+      background: var(--clr-bg);
     }
     .profile-picture {
       border: 2px solid var(--clr-main);
@@ -97,6 +138,24 @@
     .hero-text h2 { font-size: 1.9rem; margin-bottom: 0.75rem; font-weight: 400; }
     .hero-text p { color: var(--clr-light); font-size: 1.1rem; line-height: 1.8; }
     .hero-text p + p { margin-top: 0.75rem; }
+
+    /* ─── PROJECTS ───────────────────────────────────── */
+    .project-list { max-width: 900px; margin: 0 auto; }
+    .project-row {
+      padding: 1.5rem 0;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+    .project-row + .project-row { border-top: 1px dashed var(--clr-dim); }
+    .project-preview {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--clr-main);
+      border-radius: 4px;
+    }
 
     /* ─── TERMINAL ───────────────────────────────────── */
     .term {
@@ -170,6 +229,9 @@
     /* ─── RESPONSIVE ─────────────────────────────────── */
     @media (max-width: 720px) {
       .hero-inner { display: block; text-align: center; }
+      .bio-card { display: block; text-align: center; }
+      .project-row { display: block; }
+      .project-preview { margin-bottom: 1.5rem; }
       .profile-picture { margin: 0 auto 1.5rem; width: 200px; }
       .term { margin-top: 1.5rem; text-align: left; padding: 0.85rem 0.9rem 1rem; }
       .screen { font-size: 0.85rem; padding: 10px 12px; }
@@ -184,23 +246,34 @@
 
   <header>
     <h1>João Miranda</h1>
-    <p>Software Engineer @ <a href="https://www.uber.com" target="_blank" rel="noopener">Uber</a> · M.Sc. @ <a href="https://ime.usp.br" target="_blank" rel="noopener">IME‑USP</a></p>
+    <p>Software Engineer @<a href="https://www.uber.com" target="_blank" rel="noopener">Uber</a>
   </header>
 
   <main>
-    <section class="hero">
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="about">About me</button>
+      <button class="tab-btn" data-tab="projects">Projects</button>
+    </nav>
+
+    <section class="tab-content active hero" id="tab-about">
       <div class="hero-inner">
-        <img src="me.png" alt="João Miranda" class="profile-picture" width="240" height="179">
-        <div class="hero-text">
-          <h2>Hi there</h2>
-          <p>I'm João — a software engineer from Brazil building scalable backend systems at Uber. Before that I did the same at Amazon, Stocktwits and Rappi, mostly in Go.</p>
+        <div class="bio-card">
+          <img src="me.png" alt="João Miranda" class="profile-picture" width="240" height="179">
+          <div class="hero-text">
+            <h2>Hi there</h2>
+            <p>I'm João — a software engineer from Brazil building scalable backend systems at Uber. Before that I did the same at Amazon, Stocktwits and Rappi, mostly in Go.</p>
+            <p>I hold a Bachelor's and a Master's in Computer Science, both from top Brazilian CS schools.</p>
+          </div>
         </div>
 
         <details class="term" open>
           <summary>joao@jlgm.me:~$</summary>
 <div class="screen">
 <div class="line"><span class="p">$</span> <span class="cmd">whoami</span></div>
-<div class="line">joao</div>
+<div class="line">joaomiranda</div>
+<div class="gap"></div>
+<div class="line"><span class="p">$</span> <span class="cmd">pwd</span></div>
+<div class="line">/brazil/sao-paulo</div>
 <div class="gap"></div>
 <div class="line"><span class="p">$</span> <span class="cmd">cat work.log</span></div>
 <div class="row"><span class="y">2025 – now</span><span><span class="long">Software Engineer</span><span class="short">SWE</span></span><span class="k">Uber</span></div>
@@ -208,19 +281,44 @@
 <div class="row"><span class="y">2021 – 2023</span><span><span class="long">Senior Software Engineer</span><span class="short">Sr SWE</span></span><span>Stocktwits</span></div>
 <div class="row"><span class="y">2020 – 2021</span><span><span class="long">Software Engineer</span><span class="short">SWE</span></span><span>Rappi</span></div>
 <div class="row"><span class="y">2018 – 2020</span><span><span class="long">Software Engineer</span><span class="short">SWE</span></span><span>AD:60 <span class="c">(via Toptal)</span></span></div>
+<div class="row"><span class="y">2017 – 2018</span><span><span class="long">Software Engineer</span><span class="short">SWE</span></span><span>Wildlife Studios</span></div>
 <div class="gap"></div>
 <div class="line"><span class="p">$</span> <span class="cmd">cat education.log</span></div>
 <div class="row"><span class="y">2023 – 2025</span><span><span class="long">M.Sc. Computer Science</span><span class="short">M.Sc.</span></span><span><span class="long">Universidade de São Paulo</span><span class="short">USP</span></span></div>
 <div class="row"><span class="y">2013 – 2014</span><span><span class="long">Exchange, Computer Science</span><span class="short">Exchange</span></span><span><span class="long">University of Toronto</span><span class="short">UofT</span></span></div>
 <div class="row"><span class="y">2010 – 2016</span><span><span class="long">B.Sc. Computer Science</span><span class="short">B.Sc.</span></span><span><span class="long">Universidade Federal de Pernambuco</span><span class="short">UFPE</span></span></div>
 <div class="gap"></div>
-<div class="line"><span class="p">$</span> <span class="cmd">./joao_miranda.sh -cv &gt; <a href="assets/resume.pdf" target="_blank" rel="noopener">resume.pdf</a></span></div>
+<div class="line"><span class="p">$</span> <span class="cmd">./jlgm.sh -cv &gt; <a href="assets/resume.pdf" target="_blank" rel="noopener">resume.pdf</a></span></div>
+<div class="gap"></div>
 <div class="line"><span class="p">$</span> <span class="blink">▋</span></div>
 </div>
         </details>
       </div>
     </section>
+
+    <section class="tab-content hero" id="tab-projects">
+      <div class="project-list">
+        <article class="project-row">
+          <a href="https://chessvigil.com" target="_blank" rel="noopener"><img src="chessvigil.png" alt="ChessVigil home page, with a chess puzzle on the board" class="project-preview" width="1200" height="750" loading="lazy"></a>
+          <div class="hero-text">
+            <h2><a href="https://chessvigil.com" target="_blank" rel="noopener">ChessVigil.com</a></h2>
+            <p>Turns the blunders from your Chess.com and Lichess games into puzzles. Stockfish runs on your device, so the analysis stays in your browser.</p>
+          </div>
+        </article>
+      </div>
+    </section>
   </main>
+
+  <script>
+    document.querySelector('.tabs').addEventListener('click', e => {
+      const btn = e.target.closest('.tab-btn');
+      if (!btn) return;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  </script>
 
   <div class="contact">
     <a href="mailto:jlgmiran@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2v.5l-8 5-8-5V6h16zM4 18V8.8l8 5 8-5V18H4z"/></svg></a>
@@ -230,7 +328,10 @@
     <a href="https://www.flickr.com/photos/jlgm/" target="_blank" rel="noopener" aria-label="Flickr" title="Flickr"><svg viewBox="0 0 24 24"><circle cx="6.5" cy="12" r="4.5"/><circle cx="17.5" cy="12" r="4.5"/></svg></a>
   </div>
 
-  <footer>&copy; 2026 João Miranda — you can tell I made this myself because it's ugly</footer>
+  <footer>
+    <div>Top 3% talent · Vetted by Toptal · <a href="https://www.toptal.com/developers/resume/joao-miranda#NEQGZ1" target="_blank" rel="noopener">My Profile</a></div>
+    <div>&copy; 2025 João Miranda — you can tell I made this myself because it's ugly</div>
+  </footer>
 
 </body>
 </html>
