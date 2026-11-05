@@ -148,6 +148,7 @@
       gap: 2rem;
       align-items: center;
     }
+    .project-row h2 { font-size: 1.35rem; margin-bottom: 0.35rem; }
     .project-row + .project-row { border-top: 1px dashed var(--clr-dim); }
     .project-preview {
       display: block;
@@ -229,7 +230,7 @@
     /* ─── RESPONSIVE ─────────────────────────────────── */
     @media (max-width: 720px) {
       .hero-inner { display: block; text-align: center; }
-      .bio-card { display: block; text-align: center; }
+      .bio-card { display: block; text-align: center; border: none; padding: 0; }
       .project-row { display: block; }
       .project-preview { margin-bottom: 1.5rem; }
       .profile-picture { margin: 0 auto 1.5rem; width: 200px; }
@@ -261,8 +262,8 @@
           <img src="me.png" alt="João Miranda" class="profile-picture" width="240" height="179">
           <div class="hero-text">
             <h2>Hi there</h2>
-            <p>I'm João — a software engineer from Brazil building scalable backend systems at Uber. Before that I did the same at Amazon, Stocktwits and Rappi, mostly in Go.</p>
-            <p>I hold a Bachelor's and a Master's in Computer Science, both from top Brazilian CS schools.</p>
+            <p>I'm João — a software engineer from Brazil building scalable backend systems at Uber. Before that I did the same at Amazon, Stocktwits and Rappi.</p>
+            <p>I hold a Bachelor's and a Master's in Computer Science, both from top Brazilian schools.</p>
           </div>
         </div>
 
@@ -303,6 +304,13 @@
           <div class="hero-text">
             <h2><a href="https://chessvigil.com" target="_blank" rel="noopener">ChessVigil.com</a></h2>
             <p>Turns the blunders from your Chess.com and Lichess games into puzzles. Stockfish runs on your device, so the analysis stays in your browser.</p>
+          </div>
+        </article>
+        <article class="project-row">
+          <a href="https://gitlab.com/joaomi/song-seeker" target="_blank" rel="noopener"><img src="song-seeker.svg" alt="Magnifying glass over a sound wave" class="project-preview" width="1200" height="750" loading="lazy"></a>
+          <div class="hero-text">
+            <h2><a href="https://gitlab.com/joaomi/song-seeker" target="_blank" rel="noopener">Song Seeker</a></h2>
+            <p>Music recommendations that are more accurate and less commercial, combining Last.fm's listening data with Spotify's platform. Built with Kotlin, Spring Boot, Postgres and React.</p>
           </div>
         </article>
       </div>
