@@ -5,353 +5,390 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>João Miranda</title>
   <meta name="description" content="João Miranda — software engineer at Uber, based in São Paulo. Distributed systems, backend, Go.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%231d1c1c'/><text x='50' y='68' font-size='56' font-family='Courier New,monospace' font-weight='bold' text-anchor='middle' fill='%2300cc66'>$_</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23111110'/><text x='50' y='68' font-size='56' font-family='Courier New,monospace' font-weight='bold' text-anchor='middle' fill='%237ee2a0'>$_</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* ─── PALETTE ────────────────────────────────────────
-       Active: cyberpunk. To swap, replace the seven --clr-* values
-       below with the alternative set.
-
-       Alternative — monochrome + red:
-         --clr-bg: #0e0e0e;
-         --clr-bg-header-start: #1c1c1c;
-         --clr-bg-header-end: #000000;
-         --clr-main: #f2f2f2;
-         --clr-light: #a3a3a3;
-         --clr-accent: #ff3b3b;
-         --clr-dim: rgba(242, 242, 242, 0.4);
-       ──────────────────────────────────────────────────── */
     :root {
-      /* cyberpunk */
-      --clr-bg: #0b0a1a;
-      --clr-bg-header-start: #1a1038;
-      --clr-bg-header-end: #05040d;
-      --clr-main: #00f0ff;
-      --clr-light: #c9c4ff;
-      --clr-accent: #ff2a9d;
-      --clr-dim: rgba(201, 196, 255, 0.45);
+      --bg: #111110;
+      --fg: #eceae4;
+      --muted: #8f8b82;
+      --line: #2c2b28;
+      --accent: #7ee2a0;          /* the one colour on the page; swap to taste */
+      --accent-dim: rgba(126, 226, 160, .35);
 
-      /* Terminal keeps the original neon-green look */
-      --term-bg: #000;
-      --term-main: #00cc66;
-      --term-light: #66ffcc;
-      --term-accent: #ff33cc;
-      --term-dim: rgba(255, 255, 255, 0.45);
-      --term-screen: rgba(15, 14, 14, 0.9);
-      --term-screen-border: rgba(255, 255, 255, 0.15);
-      --mono: "Courier New", Courier, monospace;
+      --term-bg: #07090b;
+      --term-bar: #15191f;
+      --term-border: #23272e;
+      --term-fg: #d7dbe0;
+      --term-muted: #6b7280;
+      --mono: "Anonymous Pro", ui-monospace, Menlo, Consolas, monospace;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { -webkit-text-size-adjust: 100%; }
+    * { box-sizing: border-box; }
+    html { color-scheme: dark; -webkit-text-size-adjust: 100%; }
+    html, body { margin: 0; background: var(--bg); color: var(--fg); }
     body {
-      font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-weight: 300;
-      background: var(--clr-bg);
-      color: var(--clr-main);
-      line-height: 1.6;
+      font: 17px/1.5 var(--mono);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-    a { color: var(--clr-accent); text-decoration: none; }
-    a:hover { opacity: 0.85; }
+    ::selection { background: var(--accent); color: #000; }
 
-    /* ─── HEADER ─────────────────────────────────────── */
-    header {
-      background: linear-gradient(135deg, var(--clr-bg-header-start) 0%, var(--clr-bg-header-end) 100%);
-      border-bottom: 1px dashed var(--clr-main);
-      text-align: center;
-      padding: 2rem 1rem 1.5rem;
+    a {
+      color: inherit;
+      text-underline-offset: .18em;
+      text-decoration-thickness: 1px;
+      text-decoration-color: #4a4842;
     }
-    header h1 {
-      font-family: var(--mono);
-      font-size: 2.25rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-    header p { color: var(--clr-light); font-size: 1.15rem; margin-top: 0.25rem; }
-
-    /* ─── TABS ───────────────────────────────────────── */
-    .tabs {
-      display: flex;
-      justify-content: center;
-      gap: 0;
-      background: #060510;
-      border-top: 1px dashed var(--clr-main);
-      border-bottom: 1px dashed var(--clr-main);
-    }
-    .tab-btn {
-      background: none;
-      border: none;
-      font-family: var(--mono);
-      font-size: 1rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      color: var(--clr-main);
-      padding: 0.75rem 2rem;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-    .tab-btn:hover { color: var(--clr-accent); }
-    .tab-btn.active {
-      color: var(--clr-accent);
-      background: rgba(255, 42, 157, 0.05);
-      box-shadow: 0 1px 4px rgba(255, 42, 157, 0.3);
-    }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
+    a:hover { text-decoration-color: var(--fg); }
 
     /* ─── HERO ───────────────────────────────────────── */
-    main { flex: 1; }
-    .hero { padding: 3rem 1rem 2.5rem; }
-    .hero-inner {
-      display: grid;
-      grid-template-columns: max-content 1fr;
-      gap: 2rem;
-      max-width: 900px;
+    .hero {
+      max-width: 1100px;
       margin: 0 auto;
-      align-items: center;
-    }
-    .bio-card {
-      grid-column: 1 / 3;
+      padding: 6rem 1.4rem 3.5rem;
       display: grid;
-      grid-template-columns: max-content 1fr;
-      gap: 2rem;
-      align-items: center;
-      border: 1px solid var(--clr-main);
-      border-radius: 4px;
-      padding: 2rem;
-      background: var(--clr-bg);
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: 0 3.5rem;
+      grid-template-rows: auto 1fr;
+      align-items: start;
     }
-    .profile-picture {
-      border: 2px solid var(--clr-main);
-      border-radius: 30%;
-      width: 240px;
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-    .hero-text h2 { font-size: 1.9rem; margin-bottom: 0.75rem; font-weight: 400; }
-    .hero-text p { color: var(--clr-light); font-size: 1.1rem; line-height: 1.8; }
-    .hero-text p + p { margin-top: 0.75rem; }
-    .bio-hi { display: none; }
-    .bio-hi span { color: var(--clr-main); }
-
-    /* ─── PROJECTS ───────────────────────────────────── */
-    .project-list { max-width: 900px; margin: 0 auto; }
-    .project-row {
-      padding: 1.5rem 0;
+    .hero-text { grid-column: 1; padding-top: 1.5rem; }
+    .projects { grid-column: 1; }
+    .terms {
+      grid-column: 2;
+      grid-row: 1 / 3;
       display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 2rem;
-      align-items: center;
+      gap: 1.1rem;
     }
-    .project-row h2 { font-size: 1.35rem; margin-bottom: 0.35rem; }
-    .project-row + .project-row { border-top: 1px dashed var(--clr-dim); }
-    .project-preview {
-      display: block;
-      width: 100%;
-      height: auto;
-      border: 1px solid var(--clr-main);
-      border-radius: 4px;
+    .terms .term { opacity: .35; transition: opacity .5s, transform .4s, box-shadow .4s; }
+    .terms .term.live, .terms .term.done { opacity: 1; }
+    .who { display: flex; align-items: center; gap: 1.1rem; }
+    .who img {
+      width: 84px; height: 84px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid var(--line);
     }
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      margin: 0;
+      line-height: 1.1;
+    }
+    .aka { color: var(--muted); margin: .2rem 0 0; font-size: .95rem; }
+    .aka a { text-decoration: none; color: var(--accent); }
+    .aka a:hover { text-decoration: underline; }
+    .lede { margin: 1.6rem 0 0; max-width: 30rem; color: #c9c6be; text-transform: none; }
+    .lede + .lede { margin-top: .9rem; }
+    .hint { color: var(--muted); font-size: .85rem; margin-top: 2.4rem; }
+    .hint kbd { color: var(--fg); font: inherit; }
 
-    /* ─── TERMINAL ───────────────────────────────────── */
+    /* ─── TERMINAL (sshhole-style window) ────────────── */
     .term {
-      grid-column: 1 / 3;
+      margin: 0;
       background: var(--term-bg);
-      border: 1px solid var(--clr-main); /* same as the photo border */
-      border-radius: 4px;
-      padding: 1rem 1.25rem 1.25rem;
-      margin-top: 1rem;
-      font-family: var(--mono);
-      color: var(--term-light);
-    }
-    .term summary {
+      border: 1px solid var(--term-border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,.65), 0 0 0 1px var(--accent-dim);
+      font-size: .86rem;
+      transition: transform .4s, box-shadow .4s;
       cursor: pointer;
-      list-style: none;
-      margin-bottom: 0.75rem;
-      color: var(--term-main);
+      text-transform: none;           /* the resume keeps its own casing */
     }
-    .term summary::-webkit-details-marker { display: none; }
-    .term summary::after { content: " ▾ click to expand"; color: var(--term-dim); }
-    .term summary:hover::after { color: var(--term-light); }
-    .term:not([open]) summary { margin-bottom: 0; }
-    .term[open] summary::after { content: " ▴"; }
-    .screen {
-      background: var(--term-screen);
-      border: 1px solid var(--term-screen-border);
-      padding: 12px 14px;
-      color: var(--term-main);
-      font-size: 0.95rem;
-      line-height: 1.55;
+    .term:hover {
+      transform: rotate(-.8deg) translateY(-4px) scale(1.01);
+      box-shadow: 0 50px 110px rgba(0,0,0,.7), 0 0 0 1px var(--accent-dim), 0 0 40px rgba(126, 226, 160, .08);
     }
-    .screen .gap { height: 1.55em; }
-    .screen .short { display: none; }
-    .screen .row {
-      display: grid;
-      grid-template-columns: 7.5em minmax(0, 1fr) minmax(0, 1.15fr);
-      column-gap: 1.25em;
+    .term.done { cursor: default; }
+    .term-bar {
+      display: flex; align-items: center; gap: 7px;
+      padding: 9px 12px;
+      background: var(--term-bar);
+      border-bottom: 1px solid var(--term-border);
     }
-    .term .p { color: var(--term-dim); }       /* prompt "$" */
-    .term .cmd { color: var(--term-light); }   /* command text */
-    .term .c { color: var(--term-dim); }       /* comments */
-    .term .k { color: var(--term-accent); }    /* highlight */
-    .term .y { color: var(--term-dim); }       /* years */
-    .term a { color: var(--term-accent); }
-    .term .blink { animation: blink 1.1s steps(1) infinite; }
+    .term-bar span { width: 11px; height: 11px; border-radius: 50%; }
+    .term-bar span:nth-child(1) { background: #ff5f57; }
+    .term-bar span:nth-child(2) { background: #febc2e; }
+    .term-bar span:nth-child(3) { background: #28c840; }
+    .term-bar em { margin-left: auto; font-style: normal; color: var(--term-muted); font-size: .75rem; }
+    .term-body {
+      margin: 0;
+      padding: 14px 16px 16px;
+      min-height: 4.5em;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: var(--term-fg);
+      line-height: 1.45;
+      font-family: inherit;
+    }
+    .term-body .u { color: var(--accent); }         /* user@host */
+    .term-body .d { color: var(--term-muted); }      /* ":~$" and comments */
+    .term-body .c { color: var(--fg); }              /* typed command */
+    .term-body .k { color: var(--accent); }          /* current job */
+    .term-body a { color: var(--accent); text-decoration-color: var(--accent-dim); }
+    .caret {
+      display: none; width: .55em; height: 1.1em;
+      background: var(--term-fg); vertical-align: -.2em;
+      animation: blink 1s steps(1) infinite;
+    }
+    .term.live .caret, .term.done.last .caret { display: inline-block; }
     @keyframes blink { 50% { opacity: 0; } }
 
-    /* ─── CONTACT ────────────────────────────────────── */
-    .contact {
-      border-top: 1px dashed var(--clr-main);
-      border-bottom: 1px dashed var(--clr-main);
-      text-align: center;
-      padding: 1rem 0;
+    /* output tables inside the terminal */
+    .out {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr) minmax(0, 1.1fr);
+      column-gap: 1.4em;
+      row-gap: .1em;
+      white-space: normal;
+      margin: .15em 0 .35em;
     }
-    .contact a {
-      display: inline-block;
-      padding: 10px;
-      color: var(--clr-light);
-      line-height: 0;
-    }
-    .contact a:hover { color: var(--clr-accent); opacity: 1; }
-    .contact svg { width: 30px; height: 30px; fill: currentColor; }
+    .out .y { color: var(--term-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .out .co { color: #a3a8b0; }
 
-    /* ─── FOOTER ─────────────────────────────────────── */
-    footer {
-      text-align: center;
-      padding: 0.75rem 1rem;
-      font-size: 10px;
-      color: var(--clr-light);
-      font-family: var(--mono);
+    /* ─── BELOW THE FOLD (ozgun-style) ───────────────── */
+    .w { max-width: 40rem; margin: 0 auto; padding: 1rem 1.4rem 6rem; }
+    h2 {
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--muted);
+      margin: 2.8rem 0 .85rem;
     }
+    .rows {
+      display: grid;
+      gap: .55rem 1rem;
+      grid-template-columns: 8.5rem 1fr;
+      align-items: baseline;
+    }
+    .rows .k { color: var(--muted); }
+    .rows a { text-decoration: none; }
+    .rows a:hover { text-decoration: underline; text-decoration-color: var(--fg); }
+    .rows .k a { color: var(--fg); }
+    .rows .meta a { color: var(--muted); }
+    .rows .meta a + a { margin-left: .6rem; }
+    .links { margin: 0; color: var(--muted); line-height: 1.9; }
+    .links a { margin-right: .85rem; }
+    .icons { display: flex; gap: .4rem; margin-left: -.4rem; }
+    .icons a { margin: 0; padding: .4rem; line-height: 0; color: var(--muted); transition: color .2s; }
+    .icons a:hover { color: var(--accent); }
+    .icons svg { width: 22px; height: 22px; fill: currentColor; }
+    .projects h2 { margin-top: 2.6rem; }
+    .projects .rows { grid-template-columns: 1fr; gap: .12rem; max-width: 30rem; font-size: .95rem; }
+    .projects .rows .k { margin-top: .85rem; }
+    .projects .rows .k:first-child { margin-top: 0; }
+    .w { max-width: 1100px; padding-top: 0; }
+    .w h2 { margin-top: 1rem; }
+    footer { margin-top: 1rem; color: var(--muted); font-size: .85rem; }
+    footer p { margin: .2rem 0; }
 
     /* ─── RESPONSIVE ─────────────────────────────────── */
-    @media (max-width: 720px) {
-      .hero-inner { display: block; text-align: center; }
-      .bio-card { display: block; text-align: left; padding: 1.25rem; }
-      .bio-card .hero-text h2 { display: none; }
-      .bio-card .hero-text p + p { display: none; }
-      .bio-hi { display: inline; }
-      .term summary::after { content: " ▾ expand"; }
-      .project-row { display: block; }
-      .project-preview { margin-bottom: 1.5rem; }
-      .profile-picture { width: 100%; max-width: 320px; margin: 0 auto 1rem; }
-      .term { margin-top: 1.5rem; text-align: left; padding: 0.85rem 0.9rem 1rem; }
-      .screen { font-size: 0.85rem; padding: 10px 12px; }
-      .screen .row { grid-template-columns: 7em 5.5em minmax(0, 1fr); column-gap: 1em; }
-      .screen .long { display: none; }
-      .screen .short { display: inline; }
-      header h1 { font-size: 1.7rem; }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; grid-template-rows: none; padding-top: 3.5rem; gap: 2.5rem; }
+      .hero-text, .projects, .terms { grid-column: auto; grid-row: auto; }
+      .hero-text { padding-top: 0; }
+      .terms { order: 2; }
+      .projects { order: 3; }
+      .term { font-size: .8rem; }
+      .term:hover { transform: none; }
+      .out { grid-template-columns: max-content minmax(0, 1fr); row-gap: 0; margin-bottom: .5em; }
+      .out .co { grid-column: 2; margin-bottom: .4em; }
+      .hint { display: none; }
+    }
+    @media (max-width: 640px) {
+      .rows { grid-template-columns: 1fr; gap: .12rem; }
+      .rows .k { margin-top: .85rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0s !important; transition: none !important; }
+      .term:hover { transform: none; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>João Miranda</h1>
-    <p>Software Engineer @ <a href="https://www.uber.com" target="_blank" rel="noopener">Uber</a>
-  </header>
-
-  <main>
-    <nav class="tabs">
-      <button class="tab-btn active" data-tab="about">About me</button>
-      <button class="tab-btn" data-tab="projects">Projects</button>
-    </nav>
-
-    <section class="tab-content active hero" id="tab-about">
-      <div class="hero-inner">
-        <div class="bio-card">
-          <img src="me.png" alt="João Miranda" class="profile-picture" width="240" height="179">
-          <div class="hero-text">
-            <h2>Hi there</h2>
-            <p><span class="bio-hi"><span>Hi</span>, </span>I'm João — a software engineer from Brazil building scalable backend systems at Uber. Before that I did the same at Amazon, Stocktwits and Rappi.</p>
-            <p>I hold a Bachelor's and a Master's in Computer Science, both from top Brazilian schools.</p>
-          </div>
-        </div>
-
-        <details class="term" open>
-          <summary>joao@jlgm.me:~$</summary>
-<div class="screen">
-<div class="line"><span class="p">$</span> <span class="cmd">whoami</span></div>
-<div class="line">joao</div>
-<div class="gap"></div>
-<div class="line"><span class="p">$</span> <span class="cmd">pwd</span></div>
-<div class="line">/brazil/sao-paulo</div>
-<div class="gap"></div>
-<div class="line"><span class="p">$</span> <span class="cmd">cat work.log</span></div>
-<div class="row"><span class="y">2025 – now</span><span><span class="long">Software Engineer</span><span class="short">SWE</span></span><span class="k">Uber</span></div>
-<div class="row"><span class="y">2024 – 2025</span><span><span class="long">Software Development Engineer</span><span class="short">SDE</span></span><span>Amazon</span></div>
-<div class="row"><span class="y">2021 – 2023</span><span><span class="long">Senior Software Engineer</span><span class="short">Sr SWE</span></span><span>Stocktwits</span></div>
-<div class="row"><span class="y">2020 – 2021</span><span><span class="long">Software Engineer</span><span class="short">SWE</span></span><span>Rappi</span></div>
-<div class="row"><span class="y">2018 – 2020</span><span><span class="long">Software Engineer</span><span class="short">SWE</span></span><span>AD:60</span></div>
-<div class="row"><span class="y">2017 – 2018</span><span><span class="long">Software Engineer</span><span class="short">SWE</span></span><span>Wildlife Studios</span></div>
-<div class="gap"></div>
-<div class="line"><span class="p">$</span> <span class="cmd">cat education.log</span></div>
-<div class="row"><span class="y">2023 – 2025</span><span><span class="long">M.Sc. Computer Science</span><span class="short">M.Sc.</span></span><span><span class="long">Universidade de São Paulo</span><span class="short">USP</span></span></div>
-<div class="row"><span class="y">2013 – 2014</span><span><span class="long">Exchange, Computer Science</span><span class="short">Exchange</span></span><span><span class="long">University of Toronto</span><span class="short">UofT</span></span></div>
-<div class="row"><span class="y">2010 – 2016</span><span><span class="long">B.Sc. Computer Science</span><span class="short">B.Sc.</span></span><span><span class="long">Universidade Federal de Pernambuco</span><span class="short">UFPE</span></span></div>
-<div class="gap"></div>
-<div class="line"><span class="p">$</span> <span class="cmd">./jlgm.sh -cv &gt; <a href="assets/resume.pdf" target="_blank" rel="noopener">resume.pdf</a></span></div>
-<div class="gap"></div>
-<div class="line"><span class="p">$</span> <span class="blink">▋</span></div>
-</div>
-        </details>
-        <script>
-          // Terminal starts open on desktop, closed on mobile.
-          if (matchMedia('(max-width: 720px)').matches) document.querySelector('.term').removeAttribute('open');
-        </script>
+<header class="hero">
+  <div class="hero-text">
+    <div class="who">
+      <img src="me.png" alt="João Miranda" width="84" height="84">
+      <div>
+        <h1>João Miranda</h1>
+        <p class="aka">Software Engineer @ <a href="https://www.uber.com" target="_blank" rel="noopener">Uber</a></p>
       </div>
-    </section>
+    </div>
+    <p class="lede">I'm João — a software engineer from Brazil building scalable backend systems at Uber. Before that I did the same at Amazon, Stocktwits and Rappi.</p>
+    <p class="lede">I hold a Bachelor's and a Master's in Computer Science, both from top Brazilian schools.</p>
+  </div>
 
-    <section class="tab-content hero" id="tab-projects">
-      <div class="project-list">
-        <article class="project-row">
-          <a href="https://chessvigil.com" target="_blank" rel="noopener"><img src="chessvigil.png" alt="ChessVigil home page, with a chess puzzle on the board" class="project-preview" width="1200" height="750" loading="lazy"></a>
-          <div class="hero-text">
-            <h2><a href="https://chessvigil.com" target="_blank" rel="noopener">ChessVigil.com</a></h2>
-            <p>Turns the blunders from your Chess.com and Lichess games into puzzles. Stockfish runs on your device, so the analysis stays in your browser.</p>
-          </div>
-        </article>
-        <article class="project-row">
-          <a href="https://gitlab.com/joaomi/song-seeker" target="_blank" rel="noopener"><img src="song-seeker.svg" alt="Magnifying glass over a sound wave" class="project-preview" width="1200" height="750" loading="lazy"></a>
-          <div class="hero-text">
-            <h2><a href="https://gitlab.com/joaomi/song-seeker" target="_blank" rel="noopener">Song Seeker</a></h2>
-            <p>Music recommendations that are more accurate and less commercial, combining Last.fm's listening data with Spotify's platform. Built with Kotlin, Spring Boot, Postgres and React.</p>
-          </div>
-        </article>
-      </div>
-    </section>
-  </main>
+  <div class="projects">
+    <h2>Projects</h2>
+    <div class="rows">
+      <span class="k"><a href="https://www.chessvigil.com" target="_blank" rel="noopener">ChessVigil</a></span>
+      <span>Turns the blunders from your Chess.com and Lichess games into puzzles. Stockfish runs in your browser, so the analysis never leaves your device. <span class="meta"><a href="https://www.chessvigil.com" target="_blank" rel="noopener">site</a></span></span>
+      <span class="k"><a href="https://gitlab.com/joaomi/song-seeker" target="_blank" rel="noopener">Song Seeker</a></span>
+      <span>Music recommendations that are more accurate and less commercial: Last.fm listening data on top of Spotify. Kotlin, Spring Boot, Postgres, React. <span class="meta"><a href="https://gitlab.com/joaomi/song-seeker" target="_blank" rel="noopener">code</a></span></span>
+    </div>
+  </div>
 
-  <script>
-    document.querySelector('.tabs').addEventListener('click', e => {
-      const btn = e.target.closest('.tab-btn');
-      if (!btn) return;
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-    });
-  </script>
+  <div class="terms" id="terms" aria-label="my resume, as terminal sessions">
+  <figure class="term" data-cmd="whoami">
+    <div class="term-bar"><span></span><span></span><span></span><em>joao@jlgm.me — zsh</em></div>
+    <pre class="term-body"><code></code><span class="caret"></span></pre>
+  </figure>
+  <figure class="term" data-cmd="work">
+    <div class="term-bar"><span></span><span></span><span></span><em>joao@jlgm.me — work.log</em></div>
+    <pre class="term-body"><code></code><span class="caret"></span></pre>
+  </figure>
+  <figure class="term" data-cmd="education">
+    <div class="term-bar"><span></span><span></span><span></span><em>joao@jlgm.me — education.log</em></div>
+    <pre class="term-body"><code></code><span class="caret"></span></pre>
+  </figure>
+  </div>
+</header>
 
-  <div class="contact">
+<main class="w">
+  <h2>Elsewhere</h2>
+  <p class="links icons">
     <a href="mailto:jlgmiran@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2v.5l-8 5-8-5V6h16zM4 18V8.8l8 5 8-5V18H4z"/></svg></a>
     <a href="https://github.com/jlgm/" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg></a>
+    <a href="https://www.toptal.com/developers/resume/joao-miranda#NEQGZ1" target="_blank" rel="noopener" aria-label="Toptal" title="Toptal"><svg viewBox="0 0 24 24"><path d="M9.5 2 2 9.5l5 5 7.5-7.5zM14.5 9.5 7 17l5 5 7.5-7.5z" fill-rule="evenodd"/><path d="M9.5 2 2 9.5l2.5 2.5L12 4.5zM14.5 9.5 7 17l2.5 2.5L17 12z" opacity=".55"/></svg></a>
     <a href="https://www.linkedin.com/in/joaolgm/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
     <a href="https://www.instagram.com/joao_lgm/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.7.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
     <a href="https://www.flickr.com/photos/jlgm/" target="_blank" rel="noopener" aria-label="Flickr" title="Flickr"><svg viewBox="0 0 24 24"><circle cx="6.5" cy="12" r="4.5"/><circle cx="17.5" cy="12" r="4.5"/></svg></a>
-  </div>
+  </p>
 
   <footer>
-    <div>Top 3% talent · Vetted by Toptal · <a href="https://www.toptal.com/developers/resume/joao-miranda#NEQGZ1" target="_blank" rel="noopener">My Profile</a></div>
-    <div>&copy; 2025 João Miranda — you can tell I made this myself because it's ugly</div>
+    <p>© 2026 João Miranda</p>
   </footer>
+</main>
+
+<script>
+(function () {
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const PROMPT = '<span class="u">joao@jlgm.me</span><span class="d">:~$</span> ';
+  const row = (y, role, co, cls) =>
+    `<span class="y">${y}</span><span${cls ? ` class="${cls}"` : ""}>${role}</span><span class="co">${co}</span>`;
+
+  // one script per window. [kind, payload, delay-before-ms, type-speed-ms-per-char]
+  //   prompt: print the prompt      type: type a command      out: print html instantly
+  const scripts = {
+    whoami: [
+      ["prompt", "", 300],
+      ["type", "whoami", 400, 70],
+      ["out", "\njoao\n", 350],
+      ["prompt", "", 250],
+      ["type", "pwd", 300, 70],
+      ["out", "\n/brazil/sao-paulo", 350],
+    ],
+    work: [
+      ["prompt", "", 200],
+      ["type", "cat work.log", 300, 55],
+      ["out", "\n" + '<div class="out">' +
+        row("2025 – now", "Software Engineer", "Uber", "k") +
+        row("2024 – 2025", "Software Development Engineer", "Amazon") +
+        row("2021 – 2023", "Senior Software Engineer", "Stocktwits") +
+        row("2020 – 2021", "Software Engineer", "Rappi") +
+        row("2018 – 2020", "Software Engineer", "AD:60") +
+        row("2017 – 2018", "Software Engineer", "Wildlife Studios") +
+        "</div>", 450],
+    ],
+    education: [
+      ["prompt", "", 200],
+      ["type", "cat education.log", 300, 55],
+      ["out", "\n" + '<div class="out">' +
+        row("2023 – 2025", "M.Sc. Computer Science", "Universidade de São Paulo") +
+        row("2013 – 2014", "Exchange, Computer Science", "University of Toronto") +
+        row("2010 – 2016", "B.Sc. Computer Science", "Universidade Federal de Pernambuco") +
+        "</div>", 450],
+      ["prompt", "", 200],
+    ],
+  };
+
+  const esc = (t) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  const piece = (step, partial) => {
+    const [kind, payload] = step;
+    if (kind === "prompt") return PROMPT;
+    if (kind === "out") return payload;
+    return `<span class="c">${esc(partial == null ? payload : partial)}</span>`;
+  };
+
+  const figs = [...document.querySelectorAll("#terms .term")];
+  figs[figs.length - 1].classList.add("last");
+  const windows = figs.map((fig) => {
+    const script = scripts[fig.dataset.cmd];
+    const code = fig.querySelector("code");
+    const body = fig.querySelector(".term-body");
+    const render = (upTo, partial) => {
+      let html = "";
+      for (let i = 0; i < upTo; i++) html += piece(script[i]);
+      if (partial) html += piece(script[upTo], partial.text);
+      code.innerHTML = html;
+    };
+    // reserve the finished height so typing never pushes the page around
+    let fitW = 0;
+    const fit = () => {
+      if (body.clientWidth === fitW) return;
+      fitW = body.clientWidth;
+      const keep = code.innerHTML;
+      body.style.minHeight = "";
+      render(script.length);
+      body.style.minHeight = Math.ceil(body.getBoundingClientRect().height) + "px";
+      code.innerHTML = keep;
+    };
+    fit();
+    addEventListener("resize", fit);
+    return { fig, script, render, done: false };
+  });
+
+  let current = 0, timer = null, finished = false;
+  const finishAll = () => {
+    if (finished) return;
+    finished = true;
+    clearTimeout(timer);
+    windows.forEach((w) => { w.render(w.script.length); w.fig.classList.remove("live"); w.fig.classList.add("done"); });
+  };
+  document.getElementById("terms").addEventListener("click", (e) => { if (!e.target.closest("a")) finishAll(); });
+
+  if (reduced) { finishAll(); return; }
+
+  function runWindow(w, then) {
+    let step = 0;
+    w.fig.classList.add("live");
+    const next = () => {
+      if (finished) return;
+      if (step >= w.script.length) {
+        w.fig.classList.remove("live"); w.fig.classList.add("done");
+        timer = setTimeout(then, 250);
+        return;
+      }
+      const [kind, payload, delay, speed] = w.script[step];
+      timer = setTimeout(() => {
+        if (kind !== "type") { step++; w.render(step); next(); return; }
+        let n = 0;
+        const tick = () => {
+          if (finished) return;
+          n++;
+          w.render(step, { text: payload.slice(0, n) });
+          if (n < payload.length) timer = setTimeout(tick, speed + Math.random() * 40);
+          else { step++; w.render(step); next(); }
+        };
+        tick();
+      }, delay);
+    };
+    next();
+  }
+  const runNext = () => {
+    if (current >= windows.length) { finished = true; return; }
+    runWindow(windows[current++], runNext);
+  };
+  runNext();
+})();
+</script>
 
 </body>
 </html>
