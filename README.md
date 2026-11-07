@@ -17,7 +17,7 @@ The `CNAME` file in this repo tells GitHub Pages which domain to serve.
 
 ## Colors
 
-The palette is the `:root` block at the top of `index.html`: warm near-black background, off-white text, muted grey, and a single accent (`--accent`, currently a soft green) used for the prompt, links and the current job. The terminal windows have their own `--term-*` variables.
+The palette is the `:root` block at the top of `index.html`: violet-black background with a purple glow at the top, lavender text and muted labels, terminal green (`--accent`) for the prompt, current job and caret glow, and magenta (`--link`) for links and icon hovers. The terminal windows have their own `--term-*` variables.
 
 ## Editing the resume
 

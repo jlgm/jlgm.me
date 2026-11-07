@@ -5,30 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>João Miranda</title>
   <meta name="description" content="João Miranda — software engineer at Uber, based in São Paulo. Distributed systems, backend, Go.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23111110'/><text x='50' y='68' font-size='56' font-family='Courier New,monospace' font-weight='bold' text-anchor='middle' fill='%237ee2a0'>$_</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%230b0a1a'/><text x='50' y='68' font-size='56' font-family='Courier New,monospace' font-weight='bold' text-anchor='middle' fill='%2300cc66'>$_</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #111110;
-      --fg: #eceae4;
-      --muted: #8f8b82;
-      --line: #2c2b28;
-      --accent: #7ee2a0;          /* the one colour on the page; swap to taste */
-      --accent-dim: rgba(126, 226, 160, .35);
+      /* cyberpunk: violet-black with cyan */
+      --bg: #0b0a1a;
+      --bg-glow: #1a1038;
+      --fg: #e4e1ff;
+      --muted: #8d88b8;
+      --line: #27234a;
+      --accent: #00cc66;          /* the old terminal green: prompt, current job, caret glow */
+      --accent-dim: rgba(0, 204, 102, .3);
+      --accent-glow: rgba(0, 204, 102, .07);
+      --link: #ff2a9d;            /* magenta: links */
 
-      --term-bg: #07090b;
-      --term-bar: #15191f;
-      --term-border: #23272e;
-      --term-fg: #d7dbe0;
-      --term-muted: #6b7280;
+      --term-bg: #06050f;
+      --term-bar: #15112c;
+      --term-border: #2a2551;
+      --term-fg: #d9d6f0;
+      --term-muted: #6e699c;
       --mono: "Anonymous Pro", ui-monospace, Menlo, Consolas, monospace;
     }
 
     * { box-sizing: border-box; }
     html { color-scheme: dark; -webkit-text-size-adjust: 100%; }
     html, body { margin: 0; background: var(--bg); color: var(--fg); }
+    body { background: radial-gradient(ellipse 80% 60% at 50% 0%, var(--bg-glow) 0%, var(--bg) 70%) fixed; }
     body {
       font: 17px/1.5 var(--mono);
       min-height: 100vh;
@@ -41,9 +46,9 @@
       color: inherit;
       text-underline-offset: .18em;
       text-decoration-thickness: 1px;
-      text-decoration-color: #4a4842;
+      text-decoration-color: #3d3870;
     }
-    a:hover { text-decoration-color: var(--fg); }
+    a:hover { text-decoration-color: var(--link); }
 
     /* ─── HERO ───────────────────────────────────────── */
     .hero {
@@ -81,9 +86,9 @@
       line-height: 1.1;
     }
     .aka { color: var(--muted); margin: .2rem 0 0; font-size: .95rem; }
-    .aka a { text-decoration: none; color: var(--accent); }
+    .aka a { text-decoration: none; color: var(--link); }
     .aka a:hover { text-decoration: underline; }
-    .lede { margin: 1.6rem 0 0; max-width: 30rem; color: #c9c6be; text-transform: none; }
+    .lede { margin: 1.6rem 0 0; max-width: 30rem; color: #c4c0e6; text-transform: none; }
     .lede + .lede { margin-top: .9rem; }
     .hint { color: var(--muted); font-size: .85rem; margin-top: 2.4rem; }
     .hint kbd { color: var(--fg); font: inherit; }
@@ -103,7 +108,7 @@
     }
     .term:hover {
       transform: rotate(-.8deg) translateY(-4px) scale(1.01);
-      box-shadow: 0 50px 110px rgba(0,0,0,.7), 0 0 0 1px var(--accent-dim), 0 0 40px rgba(126, 226, 160, .08);
+      box-shadow: 0 50px 110px rgba(0,0,0,.7), 0 0 0 1px var(--accent-dim), 0 0 40px var(--accent-glow);
     }
     .term.done { cursor: default; }
     .term-bar {
@@ -150,7 +155,7 @@
       margin: .15em 0 .35em;
     }
     .out .y { color: var(--term-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .out .co { color: #a3a8b0; }
+    .out .co { color: #a8a4cc; }
 
     /* ─── BELOW THE FOLD (ozgun-style) ───────────────── */
     .w { max-width: 40rem; margin: 0 auto; padding: 1rem 1.4rem 6rem; }
@@ -168,15 +173,16 @@
     }
     .rows .k { color: var(--muted); }
     .rows a { text-decoration: none; }
-    .rows a:hover { text-decoration: underline; text-decoration-color: var(--fg); }
-    .rows .k a { color: var(--fg); }
+    .rows a:hover { text-decoration: underline; text-decoration-color: var(--link); }
+    .rows .k a { color: var(--link); }
     .rows .meta a { color: var(--muted); }
+    .rows .meta a:hover { color: var(--link); }
     .rows .meta a + a { margin-left: .6rem; }
     .links { margin: 0; color: var(--muted); line-height: 1.9; }
     .links a { margin-right: .85rem; }
     .icons { display: flex; gap: .4rem; margin-left: -.4rem; }
     .icons a { margin: 0; padding: .4rem; line-height: 0; color: var(--muted); transition: color .2s; }
-    .icons a:hover { color: var(--accent); }
+    .icons a:hover { color: var(--link); }
     .icons svg { width: 22px; height: 22px; fill: currentColor; }
     .projects h2 { margin-top: 2.6rem; }
     .projects .rows { grid-template-columns: 1fr; gap: .12rem; max-width: 30rem; font-size: .95rem; }
@@ -222,7 +228,7 @@
         <p class="aka">Software Engineer @ <a href="https://www.uber.com" target="_blank" rel="noopener">Uber</a></p>
       </div>
     </div>
-    <p class="lede">I'm João — a software engineer from Brazil building scalable backend systems at Uber. <span class="desktop-only">Before that I did the same at Amazon, Stocktwits and Toptal.</span></p>
+    <p class="lede">I'm João — a software engineer from Brazil building scalable backend systems at Uber. Before that I did the same at Amazon, Stocktwits and Toptal.</p>
     <p class="lede desktop-only">I hold a Bachelor's and a Master's in Computer Science, both from top Brazilian schools.</p>
   </div>
 
@@ -293,7 +299,7 @@
         row("2025 – now", "Software Engineer", "Uber", "k") +
         row("2024 – 2025", "Software Development Engineer", "Amazon") +
         row("2021 – 2023", "Senior Software Engineer", "Stocktwits") +
-        row("2018 – 2021", "Software Engineer", "Toptal Engagements") +
+        row("2018 – 2021", "Software Engineer", "Toptal") +
         row("2017 – 2018", "Software Engineer", "Wildlife Studios") +
         "</div>", 450],
     ],
